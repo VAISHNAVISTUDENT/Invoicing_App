@@ -50,6 +50,60 @@ app.post("/company/setup", async (req, res) => {
   }
 });
 
+// GET route to show edit form
+app.get("/company/:id/edit", async (req, res) => {
+  try {
+    const { id } = req.params;
+    const company = await Company.findById(id);
+
+    if (!company) {
+      return res.status(404).send("Company not found");
+    }
+
+    res.render("editCompany.ejs", { company });
+  } catch (err) {
+    console.error(err);
+    res.status(500).send("Server Error");
+  }
+});
+
+// PUT/POST route to update company
+app.post("/company/:id/edit", async (req, res) => {
+  try {
+    const { id } = req.params;
+    const company = await Company.findByIdAndUpdate(id, req.body, {
+      new: true,
+      runValidators: true
+    });
+
+    if (!company) {
+      return res.status(404).send("Company not found");
+    }
+
+    res.redirect(`/dashboard/${company._id}`);
+  } catch (err) {
+    console.error(err);
+    res.status(400).send("Error updating company");
+  }
+});
+
+// DELETE route
+app.post("/company/:id/delete", async (req, res) => {
+  try {
+    const { id } = req.params;
+    const company = await Company.findByIdAndDelete(id);
+
+    if (!company) {
+      return res.status(404).send("Company not found");
+    }
+
+    res.redirect("/");
+  } catch (err) {
+    console.error(err);
+    res.status(500).send("Error deleting company");
+  }
+});
+
 app.listen(3000, () => {
   console.log("Server running on port 3000");
 });
