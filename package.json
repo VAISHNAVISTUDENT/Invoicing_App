@@ -1,7 +1,7 @@
 {
   "name": "new_project",
   "version": "1.0.0",
-  "description": "",
+  "description": "nodemon app.js",
   "license": "ISC",
   "author": "vaishnavi",
   "type": "commonjs",
@@ -13,5 +13,6 @@
     "ejs": "^3.1.10",
     "express": "^5.2.1",
     "mongoose": "^9.0.2"
-  }
+  },
+  "devDependencies": {}
 }
